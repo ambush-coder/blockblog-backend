@@ -81,6 +81,8 @@ export const api = {
   },
   getPost: (id) => request(`/posts/${id}`, { auth: true }),
   createPost: (payload) => request('/posts', { method: 'POST', body: payload, auth: true }),
+  updatePost: (id, payload) => request(`/posts/${id}`, { method: 'PUT', body: payload, auth: true }),
+  deletePost: (id) => request(`/posts/${id}`, { method: 'DELETE', auth: true }),
   uploadImage: (file) => {
     const fd = new FormData();
     fd.append('image', file);
@@ -93,6 +95,7 @@ export const api = {
 
   // ── User ──
   me: () => request('/users/me', { auth: true }),
+  updateMe: (payload) => request('/users/me', { method: 'PUT', body: payload, auth: true }),
   myPosts: () => request('/users/me/posts', { auth: true }),
   savedPosts: () => request('/users/me/saved', { auth: true }),
 };

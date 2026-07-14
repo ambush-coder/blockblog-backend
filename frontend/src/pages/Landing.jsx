@@ -5,7 +5,7 @@ import { api } from '../api/client';
 import { CATEGORIES } from '../lib/format';
 import { applyVote, reconcileCounts } from '../lib/vote';
 import PostCard from '../components/PostCard';
-import { HomeIcon, SparkleIcon, NewsIcon, CompassIcon, PlusIcon, BookmarkIcon, EmailIcon } from '../components/icons';
+import { HomeIcon, PlusIcon, BookmarkIcon, EmailIcon } from '../components/icons';
 
 const activePill = { background: '#7353ea', color: '#fff', borderColor: '#7353ea' };
 const inactivePill = { background: '#fff', color: '#1a1a1b', borderColor: '#edeff1' };
@@ -113,9 +113,6 @@ export default function Landing() {
       {/* Left nav sidebar */}
       <div className="bb-leftcol" style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <button className="bb-navlink active"><HomeIcon /> Home</button>
-        <button className="bb-navlink" onClick={() => setSortBy('likes')}><SparkleIcon /> Popular</button>
-        <button className="bb-navlink" onClick={() => setCategory('World')}><NewsIcon /> News</button>
-        <button className="bb-navlink" onClick={() => setCategory('All')}><CompassIcon /> Explore</button>
         <button className="bb-navlink" onClick={() => navigate('/post')}><PlusIcon /> Start a post</button>
         <div style={{ height: 1, background: '#edeff1', margin: 'var(--space-3) 0' }} />
         <button className="bb-navlink" onClick={() => navigate('/saved-post')}><BookmarkIcon /> Saved posts</button>

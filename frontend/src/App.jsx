@@ -30,6 +30,7 @@ function AppRoutes() {
       <Route path="/" element={withLayout(<Landing />)} />
       <Route path="/about-us" element={withLayout(<About />)} />
       <Route path="/post" element={<RequireAuth>{withLayout(<PostCreate />)}</RequireAuth>} />
+      <Route path="/edit/:id" element={<RequireAuth>{withLayout(<PostCreate />)}</RequireAuth>} />
       <Route path="/user" element={<RequireAuth>{withLayout(<Account />)}</RequireAuth>} />
       <Route path="/saved-post" element={<RequireAuth>{withLayout(<Saved />)}</RequireAuth>} />
 
