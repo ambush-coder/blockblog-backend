@@ -2,9 +2,9 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { api, resolveImage } from '../api/client';
-import { hueFor, gradientFor, dateLabel, paragraphsOf, initialsOf } from '../lib/format';
+import { hueFor, gradientFor, dateLabel, paragraphsOf, initialsOf, mediaStyle } from '../lib/format';
 import { applyVote, reconcileCounts } from '../lib/vote';
-import { ArrowLeftIcon, UpvoteIcon, DownvoteIcon, BookmarkIcon, ShareIcon, ImageIcon } from '../components/icons';
+import { ArrowLeftIcon, UpvoteIcon, DownvoteIcon, BookmarkIcon, ShareIcon } from '../components/icons';
 
 export default function PostDetail() {
   const { id } = useParams();
@@ -93,9 +93,9 @@ export default function PostDetail() {
 
       <h1 style={{ fontSize: 32, lineHeight: 1.2, marginBottom: 'var(--space-4)', fontWeight: 800 }}>{post.title}</h1>
 
-      <div style={{ width: '100%', aspectRatio: '16 / 9', borderRadius: 12, marginBottom: 'var(--space-6)', background: image ? `center/cover no-repeat url("${image}")` : gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)' }}>
-        {!image && <ImageIcon size={40} />}
-      </div>
+      {image && (
+        <div style={{ width: '100%', aspectRatio: '16 / 9', borderRadius: 12, marginBottom: 'var(--space-6)', ...mediaStyle(image, gradient, post.imageFit) }} />
+      )}
 
       <div style={{ fontSize: 16, lineHeight: 1.7, color: '#1a1a1b' }}>
         {paragraphsOf(post.body).map((para, i) => <p key={i} style={{ marginBottom: 'var(--space-4)' }}>{para}</p>)}

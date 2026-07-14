@@ -79,7 +79,7 @@ exports.getPostById = async (req, res) => {
 // POST /api/posts  (auth required) -> /post
 exports.createPost = async (req, res) => {
   try {
-    const { title, image, body, category, isAnonymous } = req.body;
+    const { title, image, imageFit, body, category, isAnonymous } = req.body;
     if (!title || !body) {
       return res.status(400).json({ message: "Title and body text are required" });
     }
@@ -87,6 +87,7 @@ exports.createPost = async (req, res) => {
     const post = await Post.create({
       title,
       image: image || null,
+      imageFit: imageFit === "contain" ? "contain" : "cover",
       body,
       category,
       isAnonymous: !!isAnonymous,
@@ -108,9 +109,10 @@ exports.updatePost = async (req, res) => {
       return res.status(403).json({ message: "Not authorized to edit this post" });
     }
 
-    const { title, image, body, category, isAnonymous } = req.body;
+    const { title, image, imageFit, body, category, isAnonymous } = req.body;
     if (title !== undefined) post.title = title;
     if (image !== undefined) post.image = image;
+    if (imageFit !== undefined) post.imageFit = imageFit === "contain" ? "contain" : "cover";
     if (body !== undefined) post.body = body;
     if (category !== undefined) post.category = category;
     if (isAnonymous !== undefined) post.isAnonymous = isAnonymous;

@@ -9,6 +9,7 @@ export default function PostCreate() {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [image, setImage] = useState(null);
+  const [imageFit, setImageFit] = useState('contain');
   const [body, setBody] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -19,7 +20,7 @@ export default function PostCreate() {
     setBusy(true);
     try {
       // Anonymous authorship is the product default (PRD 6.2).
-      await api.createPost({ title, category, image, body, isAnonymous: true });
+      await api.createPost({ title, category, image, imageFit, body, isAnonymous: true });
       navigate('/user');
     } catch (err) {
       setError(err.message || 'Failed to publish');
@@ -40,7 +41,7 @@ export default function PostCreate() {
             {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
           </select>
         </div>
-        <div><label className="bb-label">Picture (optional)</label><ImageDrop value={image} onChange={setImage} /></div>
+        <div><label className="bb-label">Picture (optional)</label><ImageDrop value={image} onChange={setImage} fit={imageFit} onFitChange={setImageFit} /></div>
         <div><label className="bb-label">Article text</label><textarea className="bb-field-input" rows={10} placeholder="Write your article..." value={body} onChange={(e) => setBody(e.target.value)} /></div>
         {error && <p className="bb-error">{error}</p>}
         <div style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'flex-end' }}>

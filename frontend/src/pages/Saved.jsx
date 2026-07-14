@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api, resolveImage } from '../api/client';
-import { hueFor, gradientFor } from '../lib/format';
+import { hueFor, gradientFor, mediaStyle } from '../lib/format';
 
 // Saved reading list. Backend returns { id, title, image, excerpt(≤30 words), category }.
 export default function Saved() {
@@ -35,7 +35,7 @@ export default function Saved() {
             const gradient = gradientFor(hueFor(post));
             return (
               <div key={post.id} className="bb-card" style={{ padding: 0, overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => navigate(`/${post.id}`)}>
-                <div style={{ width: '100%', aspectRatio: '16 / 9', background: image ? `center/cover no-repeat url("${image}")` : gradient }} />
+                {image && <div style={{ width: '100%', aspectRatio: '16 / 9', ...mediaStyle(image, gradient, post.imageFit) }} />}
                 <div style={{ padding: 'var(--space-4)' }}>
                   <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 'var(--space-2)' }}>{post.title}</div>
                   <p style={{ fontSize: 13, color: '#787c7e', margin: 0 }}>{post.excerpt}</p>

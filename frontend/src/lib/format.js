@@ -25,6 +25,25 @@ export function gradientFor(hue) {
   return `linear-gradient(135deg, hsl(${hue} 62% 62%), hsl(${hue + 40} 55% 48%))`;
 }
 
+// Background style for a post's media box. Respects the creator's chosen
+// display mode — "contain" shows the whole picture (letterboxed on a neutral
+// backdrop), "cover" crops it to fill the frame. Falls back to the
+// category gradient when there's no image, and to "cover" for older posts
+// saved before imageFit existed.
+export function mediaStyle(image, gradient, fit) {
+  if (!image) {
+    return { backgroundImage: gradient, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' };
+  }
+  const mode = fit === 'contain' ? 'contain' : 'cover';
+  return {
+    backgroundImage: `url("${image}")`,
+    backgroundSize: mode,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: mode === 'contain' ? '#f6f7f8' : undefined,
+  };
+}
+
 export function dateLabel(d) {
   if (!d) return '';
   const dt = new Date(d);

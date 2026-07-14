@@ -29,6 +29,14 @@ const postSchema = new mongoose.Schema(
       type: String, // URL/path, optional — "Only 1 Picture" per spec
       default: null,
     },
+    imageFit: {
+      // How the (optional) picture is displayed: "contain" shows it in full
+      // (letterboxed), "cover" crops it to fill the frame. Author's choice
+      // at post creation, applied consistently everywhere the post appears.
+      type: String,
+      enum: ["cover", "contain"],
+      default: "cover",
+    },
     body: {
       type: String,
       required: true,

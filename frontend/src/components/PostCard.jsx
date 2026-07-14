@@ -1,6 +1,6 @@
 import { resolveImage } from '../api/client';
-import { hueFor, gradientFor, dateLabel, excerptOf } from '../lib/format';
-import { UpvoteIcon, DownvoteIcon, CommentIcon, ShareIcon, BookmarkIcon, ImageIcon } from './icons';
+import { hueFor, gradientFor, dateLabel, excerptOf, mediaStyle } from '../lib/format';
+import { UpvoteIcon, DownvoteIcon, CommentIcon, ShareIcon, BookmarkIcon } from './icons';
 
 // Feed card — a faithful port of PostCard.dc.html.
 // `post` is a raw backend post; interaction state is derived from userId/savedSet.
@@ -37,17 +37,16 @@ export default function PostCard({ post, userId, savedSet, loggedIn, onOpen, onL
 
       <p style={{ fontSize: 14, lineHeight: 1.5, color: '#4a4a4b', margin: 0 }}>{excerptOf(post)}</p>
 
-      <div
-        onClick={() => onOpen && onOpen(id)}
-        style={{
-          width: '100%', maxWidth: 560, aspectRatio: '16 / 10', borderRadius: 12,
-          background: image ? `center/cover no-repeat url("${image}")` : gradient,
-          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: 'rgba(255,255,255,0.35)', marginTop: 2,
-        }}
-      >
-        {!image && <ImageIcon size={30} />}
-      </div>
+      {image && (
+        <div
+          onClick={() => onOpen && onOpen(id)}
+          style={{
+            width: '100%', maxWidth: 560, aspectRatio: '16 / 10', borderRadius: 12,
+            ...mediaStyle(image, gradient, post.imageFit),
+            cursor: 'pointer', marginTop: 2,
+          }}
+        />
+      )}
 
       <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginTop: 2 }}>
         <div style={{ display: 'flex', alignItems: 'center', background: '#f6f7f8', borderRadius: 999, height: 32, padding: '0 4px', flexShrink: 0 }}>

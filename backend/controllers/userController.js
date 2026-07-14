@@ -39,7 +39,7 @@ exports.getSavedPosts = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate({
       path: "savedPosts",
-      select: "title image body createdAt category",
+      select: "title image imageFit body createdAt category",
     });
 
     const trimmed = user.savedPosts.map((post) => {
@@ -48,6 +48,7 @@ exports.getSavedPosts = async (req, res) => {
         id: post._id,
         title: post.title,
         image: post.image,
+        imageFit: post.imageFit || "cover",
         excerpt: words + (post.body.split(/\s+/).length > 30 ? "..." : ""),
         category: post.category,
         createdAt: post.createdAt,
